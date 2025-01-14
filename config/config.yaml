@@ -1,0 +1,6 @@
+human_SRA: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/human_sra.txt"
+pig_100: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_100.txt"
+pig_nomag: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_sra_noatlas.txt"
+all_pig_atlas: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_sra.txt"
+
+
