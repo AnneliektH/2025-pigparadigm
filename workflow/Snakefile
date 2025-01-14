@@ -1,0 +1,68 @@
+import os
+import pandas as pd
+
+# set dbs and other params
+GTDB = '/group/ctbrowngrp/sourmash-db/gtdb-rs220/gtdb-reps-rs220-k21.zip'
+GTDB_TAX  = '/group/ctbrowngrp/sourmash-db/gtdb-rs220/gtdb-rs220.lineages.reps.csv'
+KSIZE = 21 
+
+
+# set configfile
+configfile: "../config/config.yaml"
+
+# Set samples for human and pig
+metadata_human = pd.read_csv(config['human_SRA'], usecols=['acc'])
+metadata_pig = pd.read_csv(config['pig_100'], usecols=['acc'])
+metadata_pignm = pd.read_csv(config['pig_no_atlas'], usecols=['acc'])
+
+# Create a list of run ids
+samples_human = metadata_human['acc'].tolist()
+samples_pig = metadata_pig['acc'].tolist()
+samples_pignm = metadata_pignm['acc'].tolist()
+
+# Define samples
+HUMAN_METAG = config.get('samples', samples_human)
+PIG_METAG = config.get('samples', samples_pig)
+PIG_METAG_NM = config.get('samples', samples_pignm)
+
+# Human are in wort data, pig are in own sketch files, pig no mags are in wort
+def get_input_file_path(metag):
+    if metag in samples_human:
+        return "/group/ctbrowngrp/irber/data/wort-data/wort-sra/sigs/{metag}.sig"
+    elif metag in samples_pig:
+        return "/group/ctbrowngrp2/scratch/annie/2024-pigparadigm/results/sourmash/sketches/metag_hostrm/{metag}.sig.gz"
+    elif metag in samples_pignm:
+        return "/group/ctbrowngrp/irber/data/wort-data/wort-sra/sigs/{metag}.sig"
+    else:
+        raise ValueError(f"Unknown sample type: {metag}")
+
+# Function to determine the output directory based on the sample type
+def get_output_name(metag):
+    if metag in samples_human:
+        return "human"
+    elif metag in samples_pig:
+        return "pig"
+    elif metag in samples_pignm:
+        return "pig_nm"
+    else:
+        raise ValueError(f"Unknown sample type: {metag}")
+
+# include snakefiles
+include: "rules/fastgather.smk"
+include: "rules/sourmash_tax.smk"
+
+
+rule all:
+    input:
+        # expand('../results/sourmash/fastgather/concat/{metag}.{outputname}.csv', 
+        # outputname=[get_output_name(metag) for metag in HUMAN_METAG + PIG_METAG], metag=HUMAN_METAG + PIG_METAG,),
+        # expand('../results/sourmash/fastgather_compare/{metag}.{outputname}.999.csv', 
+        # outputname=[get_output_name(metag) for metag in PIG_METAG], metag=PIG_METAG,),
+        # expand('../results/sourmash/fastgather_PRJNA779404/res/{metag}.{outputname}.csv', 
+        # outputname=[get_output_name(metag) for metag in PIG_METAG], metag=PIG_METAG,),
+        #expand('../results/sourmash/fastgather/{metag}.{outputname}.atb.csv', metag=PIG_METAG)
+        expand('../results/sourmash/fastgather_hostrm/{metag}.{outputname}.999.csv', 
+        outputname=[get_output_name(metag) for metag in PIG_METAG], metag=PIG_METAG,),
+
+
+
