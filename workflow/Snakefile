@@ -30,7 +30,7 @@ def get_input_file_path(metag):
     if metag in samples_human:
         return "/group/ctbrowngrp/irber/data/wort-data/wort-sra/sigs/{metag}.sig"
     elif metag in samples_pig:
-        return "/group/ctbrowngrp2/scratch/annie/2024-pigparadigm/results/sourmash/sketches/metag_hostrm/{metag}.sig.gz"
+        return "/group/ctbrowngrp2/scratch/annie/2024-pigparadigm/results/sourmash/sketches/read_s100/{metag}.sig.gz"
     elif metag in samples_pignm:
         return "/group/ctbrowngrp/irber/data/wort-data/wort-sra/sigs/{metag}.sig"
     else:
