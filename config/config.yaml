@@ -1,10 +1,10 @@
 # lists of SRA numbers (metaG)
-human_SRA: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/human_sra.txt"
-pig_100: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_100.txt"
-pig_no_atlas: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_sra_noatlas.txt"
-all_pig_atlas: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig_sra.txt"
-pig_test: "/group/ctbrowngrp2/amhorst/2025-pig-v-human/config/pig-test.txt"
-
+human_SRA: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/human_sra.txt"
+pig_100: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/pig_100.txt"
+pig_no_atlas: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/pig_sra_noatlas.txt"
+all_pig_atlas: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/pig_sra.new.txt"
+pig_test: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/pig-test.txt"
+readm_pig: "/group/ctbrowngrp2/amhorst/2025-pigparadigm/config/readmap_pig.txt"
 # organism of interest
 pang_org: "Lactobacillus amylovorus"
 
