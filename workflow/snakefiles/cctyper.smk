@@ -1,5 +1,6 @@
 # all genomes
-FASTA, = glob_wildcards('/group/ctbrowngrp2/scratch/annie/2023-swine-sra/results/MAGs/genomes/all_genomes/{ident}.fasta')
+#FASTA, = glob_wildcards('/group/ctbrowngrp2/scratch/annie/2023-swine-sra/results/MAGs/genomes/all_genomes/{ident}.fasta')
+FASTA, = glob_wildcards('/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/drep/drep.99/dereplicated_genomes/{ident}.fasta')
 
 rule all:
     input:
@@ -7,7 +8,7 @@ rule all:
 
 rule ctyper:
     input:
-        fasta = '/group/ctbrowngrp2/scratch/annie/2023-swine-sra/results/MAGs/genomes/all_genomes/{ident}.fasta', 
+        fasta = '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/drep/drep.99/dereplicated_genomes/{ident}.fasta', 
     output:
         txt='../results/crispr/cctyper/check/{ident}.done',
     conda: 
