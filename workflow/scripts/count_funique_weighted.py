@@ -3,7 +3,7 @@ import glob
 import os
 
 # Path to folder with your files
-folder = "/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash/gather_human/fungi_protozoa"
+folder = "/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/gather_k31"
 
 # Find all CSV files
 files = glob.glob(os.path.join(folder, "*.csv"))
@@ -41,4 +41,4 @@ df_result.index.name = "basename"
 df_result = df_result.fillna(0)
 
 # Save to CSV
-df_result.to_csv("/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash/250715_f_unique_weighted.summary.human.animal.csv")
+df_result.to_csv("/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/250811_gather.human_gtdbMAG.k31.csv")

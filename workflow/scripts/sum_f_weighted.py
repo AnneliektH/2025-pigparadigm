@@ -12,17 +12,17 @@ def process_sum(folder, output_csv):
     data = {}
 
     for file in os.listdir(folder):
-        if file.endswith('.mags_and_gtdbreps.csv'):
-            basename = file.replace('.mags_and_gtdbreps.csv', '')
+        if file.endswith('.mags_and_gtdb.csv'):
+            basename = file.replace('.mags_and_gtdb.csv', '')
             full_path = os.path.join(folder, file)
             value = extract_f_unique_sum(full_path)
-            data.setdefault(basename, {})['mags_and_gtdbreps'] = value
+            data.setdefault(basename, {})['mags_and_gtdb'] = value
 
-        elif file.endswith('.gtdb_reps.csv'):
-            basename = file.replace('.gtdb_reps.csv', '')
+        elif file.endswith('.gtdb.csv'):
+            basename = file.replace('.gtdb.csv', '')
             full_path = os.path.join(folder, file)
             value = extract_f_unique_sum(full_path)
-            data.setdefault(basename, {})['gtdb_reps'] = value
+            data.setdefault(basename, {})['gtdb'] = value
 
     df_out = pd.DataFrame.from_dict(data, orient='index')
     df_out.index.name = 'basename'
@@ -30,6 +30,6 @@ def process_sum(folder, output_csv):
 
 # === Run on your folder:
 process_sum(
-    '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash/gather_human',
-    '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash/250716_f_unique_weighted.gtdb_mags.human.csv'
+    '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash_pangenome/gather',
+    '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/sourmash_pangenome/250812_f_unique_weighted.gtdb_mags.pig.k31.csv'
 )
