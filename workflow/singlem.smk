@@ -9,7 +9,7 @@ KSIZE =  31
 rule all:
     input:
         #expand('../results/singlem/{sample}_singlem.json', sample=METAG,),
-        expand("../results/sourmash_pangenome/tax/check/{metag}.mags_and_gtdb.check", metag=METAG,),
+        expand("../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check", metag=METAG,),
 
 
 # gather for the files of interest
@@ -32,7 +32,7 @@ rule tax_metag:
         csv="../results/sourmash_pangenome/gather/{metag}.mags_and_gtdb.csv",
         tax ="../results/gtdb_pangenomedb/250828_gtdb_sraMAGs.lineages.db"
     output:
-        check = "../results/sourmash_pangenome/tax/check/{metag}.mags_and_gtdb.check"
+        check = "../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check"
     conda: 
         "branchwater-skipmer"
     threads: 1
