@@ -3,13 +3,13 @@ import pandas as pd
 METAG = pd.read_csv("../resources/least_explained_metag.txt", usecols=[0], header=None).squeeze().tolist()
 MAGS = '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/sra_mags.pangenomedb_speciestaxed.10k.zip'
 GTDB = '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/gtdb-rs226.pangenomedb_species.10k.zip'
-KSIZE =  31
+KSIZE =  31 
 
 
 rule all:
     input:
         #expand('../results/singlem/{sample}_singlem.json', sample=METAG,),
-        expand("../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check", metag=METAG,),
+        expand("../results/singlem/compare/{metag}_compare.norank.csv", metag=METAG,),
 
 
 # gather for the files of interest
@@ -114,7 +114,7 @@ rule taxburst:
 
 rule taxburst_sourmash:
     input:
-        profile = "../results/sourmash_pangenome/tax/individ/{sample}.summarized.csv"
+        profile = "../results/sourmash_pangenome/tax/sourmash_compare_singleM/{sample}.mags_and_gtdb.with-lineages.csv"
     output:
         json = "../results/sourmash_pangenome/tax_json/{sample}_sourmash.json",
         html = "../results/sourmash_pangenome/tax_json/{sample}_sourmash.html"
@@ -128,3 +128,18 @@ rule taxburst_sourmash:
         --save-json {output.json}
         """
 
+rule taxburst_compare:
+    input:
+        sourmash_json = "../results/sourmash_pangenome/tax_json/{sample}_sourmash.json",
+        singlem_json = "../results/singlem/{sample}_singlem.json"
+    output:
+        csv = "../results/singlem/compare/{sample}_compare.norank.csv"
+    conda: 
+        "taxburst"
+    threads: 1
+    shell:
+        """
+        python 2025-sourmash-compare-taxonomies/compare-json-at-ranks.py \
+        {input.sourmash_json} {input.singlem_json} \
+        --remove-uncl --output {output.csv}
+        """

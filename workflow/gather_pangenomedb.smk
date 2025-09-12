@@ -14,7 +14,7 @@ WORT_METAG = pd.read_csv("../resources/metag-wort-hq.3217.txt", usecols=[0], hea
 rule all:
     input:
        #expand('../results/sourmash_pangenome/prefetch/{metag}.mags_and_gtdb.csv', metag=WORT_METAG,),
-        expand("../results/sourmash_pangenome/tax/check/{metag}.mags_and_gtdb.check", metag=WORT_METAG,),
+        expand("../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check", metag=WORT_METAG,),
 
 
 rule gather_MAG_gtdb_reps:
@@ -51,7 +51,7 @@ rule tax_metag:
         csv="../results/sourmash_pangenome/gather/{metag}.mags_and_gtdb.csv",
         tax ="../results/gtdb_pangenomedb/250828_gtdb_sraMAGs.lineages.db"
     output:
-        check = "../results/sourmash_pangenome/tax/check/{metag}.mags_and_gtdb.check"
+        check = "../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check"
     conda: 
         "branchwater-skipmer"
     threads: 1
@@ -62,7 +62,7 @@ rule tax_metag:
     """
 
 rule prefetch: 
-    input:
+    input: 
         query="../resources/wort-pig/{metag}.sig"
     output:
         csv = "../results/sourmash_pangenome/prefetch/{metag}.mags_and_gtdb.csv"

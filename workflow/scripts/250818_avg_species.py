@@ -12,8 +12,9 @@ df = pd.read_csv(input_file, sep=",")
 # filter, group, aggregate
 out = (
     df[df["rank"] == "species"]
+    .assign(weighted_expr=df["f_weighted_at_rank"] * df["total_weighted_hashes"] * 10000)
     .groupby("lineage")
-    .agg(avg_fraction=("fraction", "mean"), n_found=("lineage", "size"))
+    .agg(avg_fraction=("weighted_expr", "mean"), n_found=("lineage", "size"))
     .reset_index()
 )
 
