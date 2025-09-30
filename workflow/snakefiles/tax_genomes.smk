@@ -1,12 +1,12 @@
 GENOMES, = glob_wildcards('/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/MAGs/all_genomes/{ident}.fasta')
-
-GTDB = '/group/ctbrowngrp5/sourmash-db/gtdb-rs226/gtdb-rs226-reps.k31.rocksdb'
-GTDB_SQLDB = '/group/ctbrowngrp5/sourmash-db/gtdb-rs226/gtdb-rs226-reps.lineages.csv'
-
+GENOMES_NT, glob_wildcards('/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/MAGs/no_tax/genomes/{ident}.fasta')
+# GTDB = '/group/ctbrowngrp5/sourmash-db/gtdb-rs226/gtdb-rs226-reps.k31.rocksdb'
+# GTDB_SQLDB = '/group/ctbrowngrp5/sourmash-db/gtdb-rs226/gtdb-rs226-reps.lineages.csv'
 
 rule all:
     input:
         expand('/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/MAGs/sourmash_tax/{ident}.tax.csv', ident=GENOMES),
+
 
 
 rule sketch:

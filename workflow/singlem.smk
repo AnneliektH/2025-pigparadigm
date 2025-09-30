@@ -1,6 +1,6 @@
 import pandas as pd
 # set list of samples
-METAG = pd.read_csv("../resources/least_explained_metag.txt", usecols=[0], header=None).squeeze().tolist()
+METAG = pd.read_csv("../resources/most_expl_metag.txt", usecols=[0], header=None).squeeze().tolist()
 MAGS = '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/sra_mags.pangenomedb_speciestaxed.10k.zip'
 GTDB = '/group/ctbrowngrp2/amhorst/2025-pigparadigm/results/gtdb_pangenomedb/gtdb-rs226.pangenomedb_species.10k.zip'
 KSIZE =  31 
@@ -8,8 +8,9 @@ KSIZE =  31
 
 rule all:
     input:
-        #expand('../results/singlem/{sample}_singlem.json', sample=METAG,),
-        expand("../results/singlem/compare/{metag}_compare.norank.csv", metag=METAG,),
+        expand('../results/singlem/{sample}_singlem.json', sample=METAG,),
+        expand('../results/sourmash_pangenome/tax/sourmash_compare_singleM/check/{sample}.mags_and_gtdb.check', sample=METAG,),
+        expand("../results/singlem/compare/{metag}_compare.class.csv", metag=METAG,),
 
 
 # gather for the files of interest
@@ -32,13 +33,13 @@ rule tax_metag:
         csv="../results/sourmash_pangenome/gather/{metag}.mags_and_gtdb.csv",
         tax ="../results/gtdb_pangenomedb/250828_gtdb_sraMAGs.lineages.db"
     output:
-        check = "../results/sourmash_pangenome/tax/individ/check/{metag}.mags_and_gtdb.check"
+        check = "../results/sourmash_pangenome/tax/sourmash_compare_singleM/check/{metag}.mags_and_gtdb.check"
     conda: 
         "branchwater-skipmer"
     threads: 1
     shell: """
         sourmash tax annotate -g {input.csv} -t {input.tax} \
-        -o ../results/sourmash_pangenome/tax/individ && touch {output.check}
+        -o ../results/sourmash_pangenome/tax/sourmash_compare_singleM && touch {output.check}
     """
 
 
@@ -133,13 +134,13 @@ rule taxburst_compare:
         sourmash_json = "../results/sourmash_pangenome/tax_json/{sample}_sourmash.json",
         singlem_json = "../results/singlem/{sample}_singlem.json"
     output:
-        csv = "../results/singlem/compare/{sample}_compare.norank.csv"
+        csv = "../results/singlem/compare/{sample}_compare.class.csv"
     conda: 
         "taxburst"
     threads: 1
     shell:
         """
         python 2025-sourmash-compare-taxonomies/compare-json-at-ranks.py \
-        {input.sourmash_json} {input.singlem_json} \
+        {input.sourmash_json} {input.singlem_json} --lowest-rank class \
         --remove-uncl --output {output.csv}
         """
