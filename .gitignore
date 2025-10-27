@@ -2,3 +2,4 @@ resources/
 results/
 workflow/.snakemake
 databases/KOs_sketched_scaled_1000.sig.zip
+databases/funprofiler
