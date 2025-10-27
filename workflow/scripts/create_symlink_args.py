@@ -10,15 +10,15 @@ parser.add_argument("destination_folder", help="Path to the folder where symlink
 args = parser.parse_args()
 
 # Read the CSV
-df = pd.read_csv(args.input, sep='\t')
+df = pd.read_csv(args.input, sep=',')
 
 # Ensure destination folder exists
 os.makedirs(args.destination_folder, exist_ok=True)
 
 # Create symlinks
-for genome in df["user_genome"]:
-    source_path = os.path.join(args.source_folder, genome + ".fasta")
-    symlink_path = os.path.join(args.destination_folder, genome + ".fasta")
+for genome in df["ident"]:
+    source_path = os.path.join(args.source_folder, genome)
+    symlink_path = os.path.join(args.destination_folder, genome)
 
     if os.path.exists(source_path):
         os.symlink(source_path, symlink_path)
